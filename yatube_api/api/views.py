@@ -17,7 +17,7 @@ from .serializers import (
 
 from posts.models import Group, Post
 
-# TODO: Пагинация и фильрация, бэкэнды
+# TODO: Пагинация и фильрация, бэкэнды, перепроверить после ревью !
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -25,6 +25,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
     pagination_class = LimitOffsetPagination
+    throttle_scope = 'powerless_srv'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -34,13 +35,11 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    pagination_class = None
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
-    pagination_class = None
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))

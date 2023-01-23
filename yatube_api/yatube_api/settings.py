@@ -1,5 +1,5 @@
 # TODO: Троттлинг и пагинация, JWT tokens
-# from datetime import timedelta
+from datetime import timedelta
 
 from pathlib import Path
 
@@ -103,6 +103,20 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '10000/day',
+        'anon': '1000/day',
+        'powerless_srv': f'1/{timedelta(seconds=5)}'  # Так вообще можно ?
+    }
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
