@@ -49,8 +49,7 @@ class Post(models.Model):
     # )
 
     class Meta:
-        # TODO: раскомментировать ?
-        # ordering = ('-pub_date',)
+        ordering = ('pub_date',)
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
