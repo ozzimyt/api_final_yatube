@@ -17,13 +17,13 @@ from .serializers import (
 
 from posts.models import Group, Post
 
-# TODO: Пагинация и фильрация, бэкэнды, перепроверить после ревью !
-
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    # не понимаю почему, но если убрать IsAuthenticatedOrReadOnly ниже,
+    # из пермишенов,то тесты валятся, несмотря на то, что он прописан дефолтным
+    permission_classes = [IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
     throttle_scope = 'powerless_srv'
 
@@ -34,12 +34,13 @@ class PostViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    # не понимаю почему, но если убрать IsAuthenticatedOrReadOnly ниже,
+    # из пермишенов,то тесты валятся, несмотря на то, что он прописан дефолтным
+    permission_classes = [IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly]
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))
@@ -53,7 +54,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowingViewSet(FollowCreateListViewSet):
     serializer_class = FollowingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated]
     filter_backends = (filters.SearchFilter,)
     search_fields = ('following__username',)
 

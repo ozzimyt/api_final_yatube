@@ -41,12 +41,13 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='posts'
     )
-    # TODO: Переделать
-    # image = models.ImageField(
-    #     'Изображение',
-    #     upload_to='posts/',
-    #     blank=True
-    # )
+    image = models.ImageField(
+        'Изображение',
+        upload_to='posts/images/',
+        blank=True,
+        null=True,
+        default=None
+    )
 
     class Meta:
         ordering = ('pub_date',)
@@ -106,6 +107,12 @@ class Follow(models.Model):
     class Meta:
         verbose_name = 'подписчик'
         verbose_name_plural = 'подписчики'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'following'],
+                name='unique_following'
+            )
+        ]
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user} подписан на {self.following}'

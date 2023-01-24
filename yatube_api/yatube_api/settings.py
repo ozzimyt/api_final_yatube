@@ -111,7 +111,10 @@ REST_FRAMEWORK = {
         'user': '10000/day',
         'anon': '1000/day',
         'powerless_srv': '12/minute'
-    }
+    },
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ]
 }
 
 SIMPLE_JWT = {
