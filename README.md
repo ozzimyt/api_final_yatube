@@ -10,7 +10,8 @@
 - подписка на авторов.
 
 ## **Стек технологий**
-![python version](https://img.shields.io/badge/Python-3.7.8-green) **and** ![python version](https://img.shields.io/badge/Python-3.9.9-green)
+![python version](https://img.shields.io/badge/Python-3.7.8-green)
+![python version](https://img.shields.io/badge/Python-3.9.9-green)
 ![django version](https://img.shields.io/badge/Django-3.2.16-green)
 ![djangorestframework version](https://img.shields.io/badge/djangorestframework-3.12.4-green)
 ![djangorestframework-simplejwt](https://img.shields.io/badge/djangorestframework_simplejwt-4.7.2-green)
