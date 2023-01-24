@@ -11,7 +11,6 @@ from .serializers import (
     GroupSerializer,
     PostSerializer
 )
-
 from posts.models import Group, Post
 
 
