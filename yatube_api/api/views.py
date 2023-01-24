@@ -21,9 +21,7 @@ from posts.models import Group, Post
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # не понимаю почему, но если убрать IsAuthenticatedOrReadOnly ниже,
-    # из пермишенов,то тесты валятся, несмотря на то, что он прописан дефолтным
-    permission_classes = [IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly, ]
     pagination_class = LimitOffsetPagination
     throttle_scope = 'powerless_srv'
 
@@ -38,9 +36,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    # не понимаю почему, но если убрать IsAuthenticatedOrReadOnly ниже,
-    # из пермишенов,то тесты валятся, несмотря на то, что он прописан дефолтным
-    permission_classes = [IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly, ]
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))
